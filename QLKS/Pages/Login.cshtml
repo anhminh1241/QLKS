@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <form id="loginForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        $(document).ready(function(){
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/api/Login', // URL của API đăng nhập
+                    type: 'post',
+                    data: $('#loginForm').serialize(),
+                    success: function(response) {
+                        $('#message').html(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $('#message').html('Error: ' + textStatus + ' ' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
